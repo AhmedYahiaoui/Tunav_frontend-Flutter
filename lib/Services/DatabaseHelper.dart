@@ -6,6 +6,9 @@ class DatabaseHelper {
 
   String serverUrl = "http://192.168.1.25:3000/api";
 
+  // s,ldb,ksdg
+
+
   loginData(String email, String password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var jsonResponse = null;
@@ -32,6 +35,20 @@ class DatabaseHelper {
 
 
   Future<List> AllHotels() async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'token';
+    final value = prefs.get(key) ?? 0;
+    String myUrl = "$serverUrl/Devices/All_device_by_user";
+    http.Response response = await http.get(myUrl,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'token $value'
+      },
+    );
+    return json.decode(response.body);
+  }
+
+  Future<List> AllHotels2() async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'token';
     final value = prefs.get(key) ?? 0;
