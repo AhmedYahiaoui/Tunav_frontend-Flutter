@@ -6,8 +6,6 @@ class DatabaseHelper {
 
   String serverUrl = "http://192.168.1.25:3000/api";
 
-  // s,ldb,ksdg
-
 
   loginData(String email, String password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -38,29 +36,13 @@ class DatabaseHelper {
     final prefs = await SharedPreferences.getInstance();
     final key = 'token';
     final value = prefs.get(key) ?? 0;
-    String myUrl = "$serverUrl/Devices/All_device_by_user";
+    String myUrl = "$serverUrl/hotel/hotels";
     http.Response response = await http.get(myUrl,
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'token $value'
-      },
+      headers: {},
     );
     return json.decode(response.body);
   }
 
-  Future<List> AllHotels2() async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
-    final value = prefs.get(key) ?? 0;
-    String myUrl = "$serverUrl/Devices/All_device_by_user";
-    http.Response response = await http.get(myUrl,
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'token $value'
-      },
-    );
-    return json.decode(response.body);
-  }
 
   Future<List> getHotelByID(String ID) async {
     final prefs = await SharedPreferences.getInstance();
@@ -87,6 +69,7 @@ class DatabaseHelper {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'token $value'
+//          'Authorization': 'token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMWQ4ZTU1MDg1NmRiNmQxYzRhOTBlNSIsImlhdCI6MTYyOTQ3MDk5Mn0.okrH9Yv7A-PsYOb8CMQTey6nZ1RlAC6MkOSS6Z229zc'
         },
         body: {
           "hotel_booking": "$hotel_booking",
@@ -104,6 +87,21 @@ class DatabaseHelper {
 
   }
 
+  Future<List> getReservations() async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'token';
+    final value = prefs.get(key) ?? 0;
+
+    String myUrl = "$serverUrl/reservation/reservations";
+    http.Response response = await http.get(myUrl,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'token $value'
+//          'Authorization': 'token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMWQ4ZTU1MDg1NmRiNmQxYzRhOTBlNSIsImlhdCI6MTYyOTQyMTYzMX0.mCp5eUIByNNBfdn4vF5IgTd_XANo0M1psmtHSshpsaU'
+        });
+    return json.decode(response.body);
+  }
+
   Future<List> getReservationByID(String ID) async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'token';
@@ -117,8 +115,4 @@ class DatabaseHelper {
         });
     return json.decode(response.body);
   }
-
-//    "hotel_booking":"611d90b2f6092a321c87dda7",
-//    "user_booking":"611d8e550856db6d1c4a90e5"
-
 }

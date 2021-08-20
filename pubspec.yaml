@@ -26,6 +26,10 @@ dependencies:
   flutter_map: any
   http: any
   shared_preferences: any
+  flutter_rating_bar: ^1.1.0
+  intl: any
+  rounded_loading_button: any
+  fluttertoast: any
 
 dev_dependencies:
   flutter_test:
